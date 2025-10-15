@@ -1,4 +1,7 @@
-interface IRollable
+namespace BattleSimulator.Interfaces
 {
-    public int Roll();
+    interface IRollable
+    {
+        public int Roll();
+    }
 }

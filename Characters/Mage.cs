@@ -1,3 +1,6 @@
+using BattleSimulator.Interfaces;
+using BattleSimulator.Characters;
+
 namespace BattleSimulator.Characters
 {
     public class Mage : Character, IModifiersCon, IRollable

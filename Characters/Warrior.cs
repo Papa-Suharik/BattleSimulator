@@ -1,3 +1,6 @@
+using BattleSimulator.Interfaces;
+using BattleSimulator.Characters;
+
 namespace BattleSimulator.Characters
 {
     public class Warrior : Character, IModifiersCon, IRollable
@@ -59,7 +62,7 @@ namespace BattleSimulator.Characters
             if (!Rage && Health <= 10 && Health > 0)
             {
                 Rage = true;
-                Console.WriteLine($"{Name} HP dropeed below 4, rage mode activated!");
+                Console.WriteLine($"{Name} HP dropeed below 10, rage mode activated!");
             }
 
             return damage;
