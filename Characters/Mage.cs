@@ -2,12 +2,27 @@ namespace BattleSimulator.Characters
 {
     public class Mage : Character, IModifiersCon, IRollable
     {
+        public int Mana { get; set; } = 3;
+        public int ManaCounter { get; set; } = 0;
+        public bool ManaUsed { get; set; } = false;
+        public bool NeedRefilMana { get; set; } = false;
+        public bool ManaShield { get; set; } = true;
+        public Mage(string name) : base(40, 5, name)
+        {
+            Console.WriteLine("\nMage is created!");
+            Info();
+        }
+        public int Roll()
+        {
+            Random random = new();
+            return random.Next(1, 7);
+        }
+
         public int CalculateWithMod()
         {
             int totaldamage = 0;
 
             totaldamage += AttackPower;
-
             totaldamage += Roll();
 
             if (Mana > 0 && !NeedRefilMana)
@@ -21,7 +36,10 @@ namespace BattleSimulator.Characters
 
             return totaldamage;
         }
-
+        public override void Info()
+        {
+            Console.WriteLine($"\nHealth: {Health}\nAttackPower: {AttackPower}\nName: {Name}\nAbbilities: when attacks mage spends 1 of the 3 available mana points to deal 2 extra damage. Mana refills automatically after 3 turns. Once per game can block lethal damage");
+        }
         public override int TakeDamage(int attack)
         {
             int damage = 0;
@@ -36,12 +54,6 @@ namespace BattleSimulator.Characters
             Health -= attack;
 
             return damage += attack;
-        }
-
-        public int Roll()
-        {
-            Random random = new();
-            return random.Next(1, 7);
         }
         public override void Attack(Character target)
         {
@@ -58,7 +70,6 @@ namespace BattleSimulator.Characters
                 {
                     Console.WriteLine($"{Name} attacks with all might dealing {dealtDamage} damage! {target.Name} dies from injuries.");
                 }
-                target.Dead = true;
             }
             else
             {
@@ -80,24 +91,9 @@ namespace BattleSimulator.Characters
                 if (ManaCounter == 3)
                 {
                     NeedRefilMana = false;
+                    ManaCounter = 0;
                 }
             }
-        }
-
-        public bool ManaShield { get; set; } = true;
-        public int Mana { get; set; } = 3;
-        public int ManaCounter { get; set; } = 0;
-        public bool ManaUsed { get; set; } = false;
-        public bool NeedRefilMana { get; set; } = false;
-        public Mage(string name) : base(40, 5, name)
-        {
-            Console.WriteLine("\nMage is created!");
-            Info();
-        }
-
-        public override void Info()
-        {
-            Console.WriteLine($"\nHealth: {Health}\nAttackPower: {AttackPower}\nName: {Name}\nAbbilities: when attacks mage spends 1 of the 3 available mana points to deal 2 extra damage. Mana refills automatically after 3 turns. Once per game can block lethal damage");
         }
     }
 }
